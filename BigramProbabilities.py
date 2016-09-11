@@ -85,10 +85,11 @@ def bigram_probability():
         try:
             probability = float(bigram_dict[bigram] / vocabulary[bigram[0]])
             bigram_probability_dict[bigram] = probability
-            print bigram, ": ", probability
+            print bigram[1], "|", bigram[0], ": ", probability
         except:
             bigram_probability_dict[bigram] = "NAN"
-            print bigram, ": NAN"
+            print bigram[1], "|", bigram[0], ": ", "NAN"
+
 
     return bigram_probability_dict
 
@@ -101,10 +102,10 @@ def bigram_additive_smoothing_probability():
         try:
             probability = float( (bigram_dict[bigram] + 1)/ (vocabulary[bigram[0]] + size_of_vocabulary))
             bigram_prob_smoothing_dict[bigram] = probability
-            print bigram, ": ", probability
+            print bigram[1], "|", bigram[0], ": ", probability
         except:
             bigram_prob_smoothing_dict[bigram] = "NAN"
-            print bigram, ": NAN"
+            print bigram[1], "|", bigram[0], ": ", "NAN"
 
     return bigram_prob_smoothing_dict
 
