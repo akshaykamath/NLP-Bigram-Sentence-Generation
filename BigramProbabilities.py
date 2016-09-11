@@ -77,7 +77,7 @@ def calculate_extended_vocab():
 
             wordCount += 1
 
-    print wordCount
+    #print wordCount
 
 
 def bigram_probability():
@@ -95,7 +95,7 @@ def bigram_probability():
 
 def bigram_additive_smoothing_probability():
     print len(vocabulary.keys())
-    size_of_vocabulary = len(vocabulary.keys()) -3
+    size_of_vocabulary = len(vocabulary.keys())
 
     for bigram in bigram_dict.keys():
         try:
@@ -115,7 +115,7 @@ def get_sentence_probability(sentence, bigram_probability_dict):
     sentence_probability = 1
 
     # Subtract 4 for start and end markers in both the vocabs.
-    vocab_size = len(vocabulary.keys()) + len(extended_vocabulary.keys()) - 3
+    vocab_size = len(vocabulary.keys()) + len(extended_vocabulary.keys())
 
     for i in range(0, len(words)):
         word = words[i]
