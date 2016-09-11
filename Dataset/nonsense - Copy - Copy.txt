@@ -1,0 +1,20 @@
+START123 I am Sam END123 
+START123 I am Sam  Sam I am   END123
+START123 That Sam-I-am  That Sam-I-am !  END123
+START123 I do not like  that Sam-I-am  END123
+START123 Do you like green eggs and ham  END123
+START123 I do not like them ,  Sam-I-am .  END123
+START123 I do not like  green eggs and ham .  END123
+START123 Would you like them  Here  or there ?  END123
+START123 I would not like them here or there .  END123
+START123 I would not like them  anywhere .  END123
+START123 I do not like green eggs and ham .  END123
+START123 I do not like them ,  Sam-I-am END123
+START123 Would you like them  in a  house ? END123
+START123  Would you like them  with a mouse ? END123
+START123 I do not like them  in a house . END123
+START123  I do not like them  with a mouse . END123
+START123 I do not like them  here or there . END123
+START123 I do not like them  anywhere . END123
+START123 I do not like green eggs and ham . END123
+START123 I do not like them , Sam-I-am . END123
