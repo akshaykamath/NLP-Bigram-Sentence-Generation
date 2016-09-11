@@ -95,18 +95,18 @@ def bigram_probability():
 
 def bigram_additive_smoothing_probability():
     print len(vocabulary.keys())
-    size_of_vocabulary = len(vocabulary.keys()) - 3
+    size_of_vocabulary = len(vocabulary.keys()) -3
 
     for bigram in bigram_dict.keys():
         try:
             probability = float( (bigram_dict[bigram] + 1)/ (vocabulary[bigram[0]] + size_of_vocabulary))
-            bigram_probability_dict[bigram] = probability
+            bigram_prob_smoothing_dict[bigram] = probability
             print bigram, ": ", probability
         except:
-            bigram_probability_dict[bigram] = "NAN"
+            bigram_prob_smoothing_dict[bigram] = "NAN"
             print bigram, ": NAN"
 
-    return bigram_probability_dict
+    return bigram_prob_smoothing_dict
 
 
 # Assumption here that the dcitionary being passed is the laplace smoothed vocab.
@@ -115,7 +115,7 @@ def get_sentence_probability(sentence, bigram_probability_dict):
     sentence_probability = 1
 
     # Subtract 4 for start and end markers in both the vocabs.
-    vocab_size = len(vocabulary.keys()) + len(extended_vocabulary.keys())
+    vocab_size = len(vocabulary.keys()) + len(extended_vocabulary.keys()) - 3
 
     for i in range(0, len(words)):
         word = words[i]
@@ -141,6 +141,29 @@ def get_sentence_probability(sentence, bigram_probability_dict):
     print sentence, " ", sentence_probability
     return sentence_probability
 
+
+# Generate Bigram Sentences.
+def get_random_generated_bigram_sentences():
+    selected_next_word = "START123"
+    generated_words = []
+
+    while 1:
+        next_possible_word_tups = [(key[1], bigram_prob_dict[key]) for key in bigram_prob_dict.keys() if key[0] == selected_next_word]
+
+        next_possible_words = [tuple[0] for tuple in next_possible_word_tups]
+        conditional_probability_distribution = [tuple[1] for tuple in next_possible_word_tups]
+
+        selected_next_word = choice(next_possible_words, 1, conditional_probability_distribution)
+
+        if selected_next_word == "END123":
+            break
+
+        generated_words.append(selected_next_word[0])
+
+    generated_sentence = ' '.join(generated_words)
+
+    return generated_sentence
+
 extended_vocabulary_arr = ["START123 I do not like them in a mouse . END123",
                            "START123 I am Sam I am Sam END123",
                            "START123 I do like them anywhere . END123",
@@ -150,6 +173,7 @@ extended_vocabulary_arr = ["START123 I do not like them in a mouse . END123",
 vocabulary = defaultdict(int)
 bigram_dict = defaultdict(int)
 bigram_probability_dict = defaultdict(int)
+bigram_prob_smoothing_dict = defaultdict(int)
 extended_vocabulary = defaultdict(int)
 
 print "\n##################################################################\n"
@@ -166,7 +190,7 @@ print "\n##################################################################\n"
 bigram_prob_smoothing_dict = bigram_additive_smoothing_probability()
 
 print "\n##################################################################\n"
-get_sentence_probability("START123  I do not like them  with a mouse . END123", bigram_prob_smoothing_dict)
+get_sentence_probability("START123 I do not like them in a mouse . END123", bigram_prob_smoothing_dict)
 
 print "\n##################################################################\n"
 get_sentence_probability("START123 I am Sam I am Sam END123", bigram_prob_smoothing_dict)
@@ -174,35 +198,13 @@ get_sentence_probability("START123 I am Sam I am Sam END123", bigram_prob_smooth
 print "\n##################################################################\n"
 get_sentence_probability("START123 I do like them anywhere . END123", bigram_prob_smoothing_dict)
 
-print "\n##################################################################\n"
-get_sentence_probability("START123  I do not like them  with a mouse . END123", bigram_prob_smoothing_dict)
 
 print "\n##################################################################\n"
 get_sentence_probability("START123 I would like green ham and beef . END123", bigram_prob_smoothing_dict)
 
 
 print "\n##################################################################\n"
-# Generate Bigram Sentences.
 
-selected_next_word = "START123"
-generated_words = []
+generated_sentence = get_random_generated_bigram_sentences()
 
-while 1:
-    next_possible_words = [key[1] for key in bigram_prob_dict.keys() if key[0] == selected_next_word]
-    vals = [key for (key, value) in bigram_prob_dict if key[0] == selected_next_word]
-    probability_distribution =[value for (key, value) in bigram_prob_dict if key[0] == selected_next_word]
-
-    print next_possible_words
-    print probability_distribution
-
-    selected_next_word = choice(next_possible_words, 1, probability_distribution)
-
-    if selected_next_word == "END123":
-        break
-
-    generated_words.append(selected_next_word[0])
-
-generated_sentence = ' '.join(generated_words)
-#print generated_words
 print generated_sentence
-
